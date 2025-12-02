@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: trpc-saas-starter
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm ci && npx prisma generate && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        scope: build,runtime
+        sync: false
+      - key: JWT_SECRET
+        scope: build,runtime
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+    healthCheckPath: /api/trpc/health.check
+    autoDeploy: true
